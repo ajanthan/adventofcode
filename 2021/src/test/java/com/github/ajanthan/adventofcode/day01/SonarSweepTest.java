@@ -1,5 +1,6 @@
 package com.github.ajanthan.adventofcode.day01;
 
+import com.github.ajanthan.adventofcode.utils.InputFile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -51,9 +52,8 @@ class SonarSweepTest {
 
     private static int[] getInputs() {
         int[] realInput = null;
-        File input = new File(SonarSweepTest.class.getClassLoader().getResource("input-day01-1.txt").getFile());
         try {
-            List<String> lines = Files.readAllLines(input.toPath());
+            List<String> lines = InputFile.readInputFile("input-day01-1.txt");
             realInput = lines.stream().mapToInt(i -> Integer.parseInt(i)).toArray();
         } catch (IOException e) {
             e.printStackTrace();
