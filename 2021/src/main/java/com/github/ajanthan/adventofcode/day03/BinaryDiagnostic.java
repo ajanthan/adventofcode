@@ -11,7 +11,6 @@ public class BinaryDiagnostic {
     public int[] getO2GenRate(int[][] report, int bitPosition) {
         if (report.length == 1) return report[0];
         List<int[]> filteredReport = new ArrayList<>();
-        int recordSize = report[0].length;
 
         int bit = 0;
         int oneBitCount = 0;
@@ -35,7 +34,6 @@ public class BinaryDiagnostic {
     public int[] getCO2ScrubberRate(int[][] report, int bitPosition) {
         if (report.length == 1) return report[0];
         List<int[]> filteredReport = new ArrayList<>();
-        int recordSize = report[0].length;
 
         int bit = 0;
         int oneBitCount = 0;
@@ -85,11 +83,11 @@ public class BinaryDiagnostic {
             return;
         }
         String[] linesArray = lines.toArray(new String[0]);
-        int[][] report = new int[linesArray.length][linesArray[0].length()];
+        int[][] report1 = new int[linesArray.length][linesArray[0].length()];
         for (int i = 0; i < linesArray.length; i++) {
             for (int j = 0; j < linesArray[0].length(); j++) {
                 if (linesArray[i].charAt(j) == '1') {
-                    report[i][j] = 1;
+                    report1[i][j] = 1;
                 }
             }
         }
@@ -106,7 +104,7 @@ public class BinaryDiagnostic {
                 {1, 1, 0, 0, 1},
                 {0, 0, 0, 1, 0},
                 {0, 1, 0, 1, 0}};
-        int[] gammaRate = binaryDiagnostic.getGammaRate(report);
+        int[] gammaRate = binaryDiagnostic.getGammaRate(report1);
         int[] epsilonRate = binaryDiagnostic.invert(gammaRate);
 
 
@@ -114,16 +112,15 @@ public class BinaryDiagnostic {
         int[] o2GenRate1 = binaryDiagnostic.getO2GenRate(report2, 0);
         int[] co2ScrubRate1 = binaryDiagnostic.getCO2ScrubberRate(report2, 0);
         System.out.println("Result 2.1: " + binaryDiagnostic.binaryToDecimal(o2GenRate1) * binaryDiagnostic.binaryToDecimal(co2ScrubRate1));
-        int[] o2GenRate2 = binaryDiagnostic.getO2GenRate(report, 0);
-        int[] co2ScrubRate2 = binaryDiagnostic.getCO2ScrubberRate(report, 0);
+        int[] o2GenRate2 = binaryDiagnostic.getO2GenRate(report1, 0);
+        int[] co2ScrubRate2 = binaryDiagnostic.getCO2ScrubberRate(report1, 0);
         System.out.println("Result 2.2: " + binaryDiagnostic.binaryToDecimal(o2GenRate2) * binaryDiagnostic.binaryToDecimal(co2ScrubRate2));
 
     }
 
     public int binaryToDecimal(int[] bits) {
-        int result = 0, base = 1, start = bits.length - 1;
+        int result = 0, base = 1;
         for (int i = bits.length - 1; i >= 0; i--) {
-
             if (bits[i] == 1) {
                 result += base;
             }
